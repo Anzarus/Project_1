@@ -8,7 +8,7 @@ trigger Product2Trigger on Product2 (after insert, after update) {
             new Product2TriggerHandler().onInsert(Trigger.newMap);
         }
         if (Trigger.isUpdate) {
-            new Product2TriggerHandler().onUpdate(Trigger.newMap, Trigger.oldMap);
+            new Product2TriggerHandler().onUpdate(Trigger.new, Trigger.oldMap);
         }
     }
 }
