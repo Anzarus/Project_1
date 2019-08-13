@@ -4,12 +4,37 @@
 
 public with sharing class Services {
 
-    void checkLinkToOppAndUpdateOpp(Map<Id, Product2> productsByIds) {
+    void checkLinkToOppAndUpdateOpp(Map<Id, Product2> product2sByIds) {
+
         List<OpportunityLineItem> opportunityLineItems = [
                 SELECT Id, Product2Id, OpportunityId
                 FROM OpportunityLineItem
-                WHERE Product2Id IN :productsByIds.keySet()
+                WHERE Product2Id IN :product2sByIds.keySet()
         ];
+
+        Map<Id, Opportunity> opportunitiesByIds = getOpportunitiesByIds(opportunityLineItems);
+
+        for (OpportunityLineItem opp : opportunityLineItems) {
+            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c += product2sByIds.get(opp.Product2Id).Price__c; //todo multiplex to count
+        }
+    }
+
+    void subProdPriceFromOpp(Map<Id, Product2> product2sByIds) {
+
+        List<OpportunityLineItem> opportunityLineItems = [
+                SELECT Id, OpportunityId, Product2Id
+                FROM OpportunityLineItem
+                WHERE Product2Id IN :product2sByIds.keySet()
+        ];
+
+        Map<Id, Opportunity> opportunitiesByIds = getOpportunitiesByIds(opportunityLineItems);
+
+        for(OpportunityLineItem opp : opportunityLineItems){
+            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c -= product2sByIds.get(opp.Product2Id).Price__c; //todo multiplex to count
+        }
+    }
+
+    private Map<Id, Opportunity> getOpportunitiesByIds(List<OpportunityLineItem> opportunityLineItems) {
 
         Map<Id, OpportunityLineItem> opportunityLineItemsByOppIds = new Map<Id, OpportunityLineItem>();
         for (OpportunityLineItem oppLineItem : opportunityLineItems) {
@@ -25,8 +50,6 @@ public with sharing class Services {
         ];
         Map<Id, Opportunity> opportunitiesByIds = new Map<Id, Opportunity>(opportunities);
 
-        for (OpportunityLineItem opp : opportunityLineItems) {
-            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c += productsByIds.get(opp.Product2Id).Price__c;
-        }
+        return opportunitiesByIds;
     }
 }
