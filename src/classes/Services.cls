@@ -37,7 +37,7 @@ public with sharing class Services {
         Map<Id, Product2> newProduct2sByIds = new Map<Id, Product2>();
 
         for (Product2 prod : newProduct2s) {
-            if (prod.Price__c != oldProduct2sByIds.get(prod.Id).Price__c) newProduct2sByIds.put(prod.Id, Product2);
+            if (prod.Price__c != oldProduct2sByIds.get(prod.Id).Price__c) newProduct2sByIds.put(prod.Id, prod);
         }
 
         return newProduct2sByIds;
