@@ -15,7 +15,8 @@ public with sharing class Services {
         Map<Id, Opportunity> opportunitiesByIds = getOpportunitiesByIds(opportunityLineItems);
 
         for (OpportunityLineItem opp : opportunityLineItems) {
-            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c += product2sByIds.get(opp.Product2Id).Price__c; //todo multiplex to count
+            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c +=
+                    product2sByIds.get(opp.Product2Id).Price__c  * opp.Quantity;
         }
     }
 
@@ -54,7 +55,8 @@ public with sharing class Services {
         Map<Id, Opportunity> opportunitiesByIds = getOpportunitiesByIds(opportunityLineItems);
 
         for (OpportunityLineItem opp : opportunityLineItems) {
-            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c -= product2sByIds.get(opp.Product2Id).Price__c; //todo multiplex to count
+            opportunitiesByIds.get(opp.OpportunityId).Total_Price__c -=
+                    product2sByIds.get(opp.Product2Id).Price__c * opp.Quantity;
         }
     }
 
