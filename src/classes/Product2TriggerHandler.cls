@@ -4,17 +4,35 @@
 
 public with sharing class Product2TriggerHandler {
 
-    public Product2TriggerHandler(){}
+    private OpportunityTotalPriceRecalculator recalc;
 
-    /*public void onInsert(Map<Id, Product2> product2sByIds){
-        Services.checkLinkToOppAndUpdateOpp(product2sByIds);
-    }*/
-
-    public void onUpdate(List<Product2> newProduct2s, Map<Id, Product2> oldProduct2sByIds){
-        Services.updatingTotalValueOnOppIfUpdatedPriceOnProd(newProduct2s, oldProduct2sByIds);
+    public Product2TriggerHandler() {
     }
 
-    /*public void onDelete(Map<Id, Product2> Product2sByIds){
-        Services.subProdPriceFromOpp(Product2sByIds);
-    }*/
+    public void onUpdate(List<Product2> newProduct2s, Map<Id, Product2> oldProduct2sByIds) {
+
+        Map<Id, Product2> newProduct2sByIds = checkWhichProdChangePriceAndFormMap(newProduct2s, oldProduct2sByIds);
+        Map<Id, Product2> updatedOldProduct2sByIds = getUpdatedOldProduct2sByIds(newProduct2sByIds, oldProduct2sByIds);
+
+        recalc = new OpportunityTotalPriceRecalculator(newProduct2sByIds, updatedOldProduct2sByIds);
+
+        recalc.checkLinkToOppAndUpdateOpp();
+        recalc.subProdPriceFromOpp();
+    }
+
+    private Map<Id, Product2> checkWhichProdChangePriceAndFormMap(List<Product2> newProduct2s, Map<Id, Product2> oldProduct2sByIds) {
+        Map<Id, Product2> newProduct2sByIds = new Map<Id, Product2>();
+        for (Product2 prod : newProduct2s) {
+            if (prod.Price__c != oldProduct2sByIds.get(prod.Id).Price__c) newProduct2sByIds.put(prod.Id, prod);
+        }
+        return newProduct2sByIds;
+    }
+
+    private Map<Id, Product2> getUpdatedOldProduct2sByIds(Map<Id, Product2> newProduct2sByIds, Map<Id, Product2> oldProduct2sByIds) {
+        Map<Id, Product2> updatedOldProduct2sByIds = new Map<Id, Product2>();
+        for (Product2 prod : newProduct2sByIds.values()) {
+            if (oldProduct2sByIds.containsKey(prod.Id)) updatedOldProduct2sByIds.put(prod.Id, oldProduct2sByIds.get(prod.Id));
+        }
+        return updatedOldProduct2sByIds;
+    }
 }

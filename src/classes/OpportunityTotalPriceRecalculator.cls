@@ -1,15 +1,23 @@
 /**
- * Created by AntonAntoniuk on 13.08.2019.
+ * Created by AntonAntoniuk on 16.08.2019.
  */
 
-public with sharing class Services {
+public with sharing class OpportunityTotalPriceRecalculator {
 
-    public static void checkLinkToOppAndUpdateOpp(Map<Id, Product2> product2sByIds) {
+    private Map<Id, Product2> newProduct2sByIds;
+    private Map<Id, Product2> oldProduct2sByIds;
+
+    public OpportunityTotalPriceRecalculator(Map<Id, Product2> newProduct2sByIds, Map<Id, Product2> oldProduct2sByIds){
+        this.newProduct2sByIds = newProduct2sByIds;
+        this.oldProduct2sByIds = oldProduct2sByIds;
+    }
+
+    public void checkLinkToOppAndUpdateOpp() {
 
         List<OpportunityLineItem> opportunityLineItems = [
                 SELECT Id, Product2Id, OpportunityId, Quantity
                 FROM OpportunityLineItem
-                WHERE Product2Id IN :product2sByIds.keySet()
+                WHERE Product2Id IN :THIS.newProduct2sByIds.keySet()
         ];
         if (opportunityLineItems == null) return;
 
@@ -17,42 +25,18 @@ public with sharing class Services {
 
         for (OpportunityLineItem oppLineItem : opportunityLineItems) {
             opportunitiesByIds.get(oppLineItem.OpportunityId).Total_Price__c +=
-                    product2sByIds.get(oppLineItem.Product2Id).Price__c * oppLineItem.Quantity;
+                    this.newProduct2sByIds.get(oppLineItem.Product2Id).Price__c * oppLineItem.Quantity;
         }
 
         update opportunitiesByIds.values();
     }
 
-    public static void updatingTotalValueOnOppIfUpdatedPriceOnProd(List<Product2> newProduct2s, Map<Id, Product2> oldProduct2sByIds) {
-
-        Map<Id, Product2> newProduct2sByIds = checkWhichProdChangePriceAndFormMap(newProduct2s, oldProduct2sByIds);
-
-        Map<Id, Product2> updatedOldProduct2sByIds = new Map<Id, Product2>();
-        for (Product2 prod : newProduct2sByIds.values()) {
-            if (oldProduct2sByIds.containsKey(prod.Id)) updatedOldProduct2sByIds.put(prod.Id, oldProduct2sByIds.get(prod.Id));
-        }
-
-        checkLinkToOppAndUpdateOpp(newProduct2sByIds);
-        subProdPriceFromOpp(updatedOldProduct2sByIds);
-    }
-
-    private static Map<Id, Product2> checkWhichProdChangePriceAndFormMap(List<Product2> newProduct2s, Map<Id, Product2> oldProduct2sByIds) {
-
-        Map<Id, Product2> newProduct2sByIds = new Map<Id, Product2>();
-
-        for (Product2 prod : newProduct2s) {
-            if (prod.Price__c != oldProduct2sByIds.get(prod.Id).Price__c) newProduct2sByIds.put(prod.Id, prod);
-        }
-
-        return newProduct2sByIds;
-    }
-
-    public static void subProdPriceFromOpp(Map<Id, Product2> product2sByIds) {
+    public void subProdPriceFromOpp() {
 
         List<OpportunityLineItem> opportunityLineItems = [
                 SELECT Id, OpportunityId, Product2Id, Quantity
                 FROM OpportunityLineItem
-                WHERE Product2Id IN :product2sByIds.keySet()
+                WHERE Product2Id IN :THIS.oldProduct2sByIds.keySet()
         ];
         if(opportunityLineItems == null) return;
 
@@ -60,13 +44,13 @@ public with sharing class Services {
 
         for (OpportunityLineItem opp : opportunityLineItems) {
             opportunitiesByIds.get(opp.OpportunityId).Total_Price__c -=
-                    product2sByIds.get(opp.Product2Id).Price__c * opp.Quantity;
+                    this.oldProduct2sByIds.get(opp.Product2Id).Price__c * opp.Quantity;
         }
 
         update opportunitiesByIds.values();
     }
 
-    private static Map<Id, Opportunity> getOpportunitiesByIds(List<OpportunityLineItem> opportunityLineItems) {
+    private Map<Id, Opportunity> getOpportunitiesByIds(List<OpportunityLineItem> opportunityLineItems) {
 
         Map<Id, OpportunityLineItem> opportunityLineItemsByOppIds = new Map<Id, OpportunityLineItem>();
         for (OpportunityLineItem oppLineItem : opportunityLineItems) {
@@ -84,4 +68,6 @@ public with sharing class Services {
 
         return opportunitiesByIds;
     }
+
+
 }
