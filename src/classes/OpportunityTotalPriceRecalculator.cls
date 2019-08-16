@@ -68,6 +68,4 @@ public with sharing class OpportunityTotalPriceRecalculator {
 
         return opportunitiesByIds;
     }
-
-
 }

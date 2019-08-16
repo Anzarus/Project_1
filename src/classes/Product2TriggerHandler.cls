@@ -4,7 +4,7 @@
 
 public with sharing class Product2TriggerHandler {
 
-    private OpportunityTotalPriceRecalculator recalc;
+    private OpportunityTotalPriceRecalculator recalculator;
 
     public Product2TriggerHandler() {
     }
@@ -14,10 +14,10 @@ public with sharing class Product2TriggerHandler {
         Map<Id, Product2> newProduct2sByIds = checkWhichProdChangePriceAndFormMap(newProduct2s, oldProduct2sByIds);
         Map<Id, Product2> updatedOldProduct2sByIds = getUpdatedOldProduct2sByIds(newProduct2sByIds, oldProduct2sByIds);
 
-        recalc = new OpportunityTotalPriceRecalculator(newProduct2sByIds, updatedOldProduct2sByIds);
+        recalculator = new OpportunityTotalPriceRecalculator(newProduct2sByIds, updatedOldProduct2sByIds);
 
-        recalc.checkLinkToOppAndUpdateOpp();
-        recalc.subProdPriceFromOpp();
+        recalculator.checkLinkToOppAndUpdateOpp();
+        recalculator.subProdPriceFromOpp();
     }
 
     private Map<Id, Product2> checkWhichProdChangePriceAndFormMap(List<Product2> newProduct2s, Map<Id, Product2> oldProduct2sByIds) {

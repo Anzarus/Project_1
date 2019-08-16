@@ -10,14 +10,23 @@ private class TestProduct2TriggerHandler {
         List<Product2> product2s = TestProductAndOppCreator.generateAndConnectProdToOpp(1, 1, 100, 50000);
         Map<Id, Product2> product2sByIds = new Map<Id, Product2>(product2s);
 
+        Test.startTest();
+
         List<OpportunityLineItem> oppLineItems = getOppLineItems(product2sByIds);
         Map<Id, OpportunityLineItem> oppLineItemsByOppIds = getOppLineItemsByOppIds(oppLineItems);
 
         List<Opportunity> opps = getOpps(oppLineItemsByOppIds);
 
-        Map<Id, Double> differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        Map<Id, Double> differenceOfPrices;
+
+        User testUser = getTestUser();
+        System.runAs(testUser) {
+            differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        }
 
         List<Opportunity> updatedOpps = getOpps(oppLineItemsByOppIds);
+
+        Test.stopTest();
 
         System.assertEquals(opps[0].Total_Price__c + differenceOfPrices.get(product2s[0].Id) *
                 oppLineItemsByOppIds.get(updatedOpps[0].Id).Quantity, updatedOpps[0].Total_Price__c);
@@ -28,17 +37,25 @@ private class TestProduct2TriggerHandler {
     static void testOneProductToManyOppPriceUpdate() {
 
         List<Product2> product2s = TestProductAndOppCreator.generateAndConnectProdToOpp(200, 1, 100, 50000);
-
         Map<Id, Product2> product2sByIds = new Map<Id, Product2>(product2s);
+
+        Test.startTest();
 
         List<OpportunityLineItem> oppLineItems = getOppLineItems(product2sByIds);
         Map<Id, OpportunityLineItem> oppLineItemsByOppIds = getOppLineItemsByOppIds(oppLineItems);
 
         List<Opportunity> opps = getOpps(oppLineItemsByOppIds);
 
-        Map<Id, Double> differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        Map<Id, Double> differenceOfPrices;
+
+        User testUser = getTestUser();
+        System.runAs(testUser) {
+            differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        }
 
         List<Opportunity> updatedOpps = getOpps(oppLineItemsByOppIds);
+
+        Test.stopTest();
 
         for (Integer i = 0; i < opps.size(); i++) {
             System.assertEquals(opps[i].Total_Price__c + differenceOfPrices.get(product2s[0].Id) *
@@ -52,14 +69,23 @@ private class TestProduct2TriggerHandler {
         List<Product2> product2s = TestProductAndOppCreator.generateAndConnectProdToOpp(1, 200, 100, 50000);
         Map<Id, Product2> product2sByIds = new Map<Id, Product2>(product2s);
 
+        Test.startTest();
+
         List<OpportunityLineItem> oppLineItems = getOppLineItems(product2sByIds);
         Map<Id, OpportunityLineItem> oppLineItemsByOppIds = getOppLineItemsByOppIds(oppLineItems);
 
         List<Opportunity> opps = getOpps(oppLineItemsByOppIds);
 
-        Map<Id, Double> differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        Map<Id, Double> differenceOfPrices;
+
+        User testUser = getTestUser();
+        System.runAs(testUser) {
+            differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        }
 
         List<Opportunity> updatedOpps = getOpps(oppLineItemsByOppIds);
+
+        Test.stopTest();
 
         Map<Id, OpportunityLineItem> oppLineItemsByProdIds = getOppLineItemsByProdIds(oppLineItems);
 
@@ -76,14 +102,23 @@ private class TestProduct2TriggerHandler {
         List<Product2> product2s = TestProductAndOppCreator.generateAndConnectProdToOpp(2, 2, 100, 500);
         Map<Id, Product2> product2sByIds = new Map<Id, Product2>(product2s);
 
+        Test.startTest();
+
         List<OpportunityLineItem> oppLineItems = getOppLineItems(product2sByIds);
         Map<Id, OpportunityLineItem> oppLineItemsByOppIds = getOppLineItemsByOppIds(oppLineItems);
 
         List<Opportunity> opps = getOpps(oppLineItemsByOppIds);
 
-        Map<Id, Double> differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        Map<Id, Double> differenceOfPrices;
+
+        User testUser = getTestUser();
+        System.runAs(testUser) {
+            differenceOfPrices = getDifferenceOfPrices(product2s, product2s.size());
+        }
 
         List<Opportunity> updatedOpps = getOpps(oppLineItemsByOppIds);
+
+        Test.stopTest();
 
         for (Integer i = 0; i < opps.size(); i++) {
             for (Integer j = 0; j < product2s.size(); j++) {
@@ -99,17 +134,27 @@ private class TestProduct2TriggerHandler {
         List<Product2> product2s = TestProductAndOppCreator.generateAndConnectProdToOpp(1, 1000, 100, 50000);
         Map<Id, Product2> product2sByIds = new Map<Id, Product2>(product2s);
 
+        Test.startTest();
+
         List<OpportunityLineItem> oppLineItems = getOppLineItems(product2sByIds);
         Map<Id, OpportunityLineItem> oppLineItemsByOppIds = getOppLineItemsByOppIds(oppLineItems);
 
         List<Opportunity> opps = getOpps(oppLineItemsByOppIds);
 
-        Integer quantityOfProduct2sUpdatedByPrice = Integer.valueOf(Math.random() * product2s.size());
-        renamePartOfProducts(product2s, quantityOfProduct2sUpdatedByPrice);
+        Map<Id, Double> differenceOfPrices;
+        Integer quantityOfProduct2sUpdatedByPrice;
 
-        Map<Id, Double> differenceOfPrices = getDifferenceOfPrices(product2s, quantityOfProduct2sUpdatedByPrice);
+        User testUser = getTestUser();
+        System.runAs(testUser) {
+            quantityOfProduct2sUpdatedByPrice = Integer.valueOf(Math.random() * product2s.size());
+            renamePartOfProducts(product2s, quantityOfProduct2sUpdatedByPrice);
+
+            differenceOfPrices = getDifferenceOfPrices(product2s, quantityOfProduct2sUpdatedByPrice);
+        }
 
         List<Opportunity> updatedOpps = getOpps(oppLineItemsByOppIds);
+
+        Test.stopTest();
 
         Map<Id, OpportunityLineItem> oppLineItemsByProdIds = getOppLineItemsByProdIds(oppLineItems);
 
@@ -118,6 +163,21 @@ private class TestProduct2TriggerHandler {
                     oppLineItemsByProdIds.get(product2s[i].Id).Quantity;
         }
         System.assertEquals(opps[0].Total_Price__c, updatedOpps[0].Total_Price__c);
+    }
+
+    private static User getTestUser() {
+//        return [SELECT Id FROM User WHERE Username = 'antonuk1999@gmail.com'];
+        Profile profile = [SELECT Id FROM Profile WHERE Name = 'Standard user' LIMIT 1];
+        User testUser = new User(LastName = 'Robinson', Alias = 'Robi', Email = 'antonantonuk1999@gmail.com',
+                Username = 'testUserProject1@gmail.com' + Datetime.now().getTime(), CommunityNickname = 'testUser',
+                EmailEncodingKey = 'UTF-8', LanguageLocaleKey = 'en_US', LocaleSidKey = 'en_US', ProfileId = profile.Id,
+                TimeZoneSidKey = 'America/Los_Angeles');
+
+        PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Label = 'Project 1 user permission set'];
+        PermissionSetAssignment psa = new PermissionSetAssignment
+                (PermissionSetId = permissionSet.Id, AssigneeId = testUser.Id);
+
+        return testUser;
     }
 
     private static Map<Id, OpportunityLineItem> getOppLineItemsByOppIds(List<OpportunityLineItem> oppLineItems) {
