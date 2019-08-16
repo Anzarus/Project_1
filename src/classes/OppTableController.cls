@@ -4,11 +4,11 @@
 
 public with sharing class OppTableController {
     @AuraEnabled
-    public static List<Product2> getProduct2sofOpp(String oppId) {
+    public static List<Product2> getProduct2sOfOpp(String oppId) {
         return new Product2sOfCurrentOppGetter().getProduct2sOfOpp(oppId);
     }
 
-    private class Product2sOfCurrentOppGetter {
+    class Product2sOfCurrentOppGetter {
 
         private List<Product2> getProduct2sOfOpp(String oppId) {
             List<OpportunityLineItem> oppLineItems = [
@@ -27,8 +27,32 @@ public with sharing class OppTableController {
                     SELECT Id, Name, Price__c
                     FROM Product2
                     WHERE Id IN :oppLineItemsByProdIds.keySet()
+//                    ORDER BY Name
             ];
         }
     }
 
+    @AuraEnabled
+    public static void deleteProdFromOpp(String oppId, String prodId) {
+
+        Product2 prod = [SELECT Id, Price__c FROM Product2
+        WHERE Id = : Id.valueOf(prodId)];
+
+        OpportunityLineItem oppLineItem = [
+                SELECT Id, Quantity
+                FROM OpportunityLineItem
+                WHERE Product2Id = :prod.Id AND OpportunityId = :Id.valueOf(oppId)
+                LIMIT 1
+        ];
+        Opportunity opp = [
+                SELECT Id, Total_Price__c
+                FROM Opportunity
+                WHERE Id = :Id.valueOf(oppId)
+                LIMIT 1
+        ];
+        opp.Total_Price__c -= prod.Price__c * oppLineItem.Quantity;
+
+        update opp;
+        delete oppLineItem;
+    }
 }

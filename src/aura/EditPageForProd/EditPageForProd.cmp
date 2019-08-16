@@ -1,0 +1,38 @@
+<!--
+ - Created by AntonAntoniuk on 16.08.2019.
+ -->
+
+<aura:component description="EditPageForProd" controller="EditPageForProd">
+    <!--    attributes-->
+    <aura:attribute name="prodId" type="Object"/>
+
+    <!--    handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--Body-->
+    <div style="height: 640px;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{! c.cancel }"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Box Example</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                        <lightning:textarea label="ProdName" name="Product Name" value=""/>
+                        <lightning:textarea label="ProdName" name="Product Name" value=""/>
+
+
+                        {!v.prodId}
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button label="Cancel" variant="neutral" onclick="{!c.cancel}"></lightning:button>
+                    <!--                    <lightning-button label="Save" variant="brand" onclick={saveMethod}></lightning-button>-->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+
+</aura:component>
