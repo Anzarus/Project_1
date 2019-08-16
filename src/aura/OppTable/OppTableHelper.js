@@ -49,10 +49,11 @@
         $A.enqueueAction(action);
     },
 
-    viewChangeWindow: function (cmp, prod) {
+    viewChangeWindow: function (cmp, prodId) {
+
         $A.createComponent(
             "c:EditPageForProd", {
-                "prod": prod
+                "prodId": prodId
             },
             function (myModal) {
                 if (cmp.isValid()) {
