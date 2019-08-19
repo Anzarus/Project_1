@@ -20,8 +20,12 @@
                 helper.deleteProdFromOpp(cmp, row);
                 break;
             case 'edit':
-                helper.viewChangeWindow(cmp, prodId);
+                helper.viewChangeWindow(cmp, prodId, rowIndex);
                 break;
         }
+    },
+
+    handleCompEvent: function (cmp, event, helper) {
+        helper.getOneUpdatedProd(cmp, event);
     }
 });

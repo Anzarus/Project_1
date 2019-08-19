@@ -55,4 +55,20 @@ public with sharing class OppTableController {
         update opp;
         delete oppLineItem;
     }
+
+    @AuraEnabled
+    public static Product2 getUpdatedProduct2s(String prodId) {
+        return new UpdatedProduct2Getter().getProduct2(prodId);
+    }
+
+    class UpdatedProduct2Getter {
+
+        private Product2 getProduct2(String prodId) {
+            return [
+                    SELECT Id, Name, Price__c
+                    FROM Product2
+                    WHERE Id = :Id.valueOf(prodId)
+            ];
+        }
+    }
 }

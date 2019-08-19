@@ -49,11 +49,12 @@
         $A.enqueueAction(action);
     },
 
-    viewChangeWindow: function (cmp, prodId) {
+    viewChangeWindow: function (cmp, prodId, rowIndex) {
 
         $A.createComponent(
             "c:EditPageForProd", {
-                "prodId": prodId
+                "prodId": prodId,
+                "rowIndex": rowIndex
             },
             function (myModal) {
                 if (cmp.isValid()) {
@@ -64,5 +65,22 @@
                 }
             }
         );
+    },
+
+    getOneUpdatedProd: function (cmp, event) {
+        const rowIndex = event.getParam("rowIndex");
+        const data = cmp.get("v.data");
+
+        const action = cmp.get("c.getUpdatedProduct2s");
+        action.setParams({prodId: data[rowIndex].Id});
+
+        action.setCallback(this, function (response) {
+            const state = response.getState();
+            if (state === "SUCCESS") {
+                data[rowIndex] = response.getReturnValue();
+                cmp.set("v.data", data);
+            }
+        });
+        $A.enqueueAction(action);
     }
 });
