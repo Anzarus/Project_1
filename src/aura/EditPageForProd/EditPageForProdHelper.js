@@ -25,17 +25,16 @@
     },
 
     updateCurrentProd:function(cmp, helper, newName, newPrice, prodId){
-        const rowIndex = cmp.get("v.rowIndex");
         const action = cmp.get("c.setNewParamOfProduct2");
         action.setParams({name: newName, price: newPrice, prodId: prodId});
         action.setCallback(this, function (response) {
             const state = response.getState();
             if (state === "SUCCESS") {
                 const compEvent = cmp.getEvent("needToRefreshRecord");
-                compEvent.setParams({rowIndex: rowIndex});
+                compEvent.fire();
 
                 helper.showToast('Success!','The record was updated!','success');
-                compEvent.fire();
+
                 cmp.destroy();
                 $A.get('e.force:refreshView').fire();
             } else {
@@ -50,7 +49,7 @@
         toastEvent.setParams({
             title: title,
             message: message,
-            variant: variant
+            type: variant
         });
         toastEvent.fire();
     }

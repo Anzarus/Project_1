@@ -138,10 +138,6 @@
                             <option name="name" value="OppTable" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="TestContainer" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="AuraDefinitionBundle" />
@@ -318,13 +314,13 @@
                             <option name="name" value="Account.NumberofLocations__c" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="Account.SLA__c" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="Account.SLAExpirationDate__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Account.SLASerialNumber__c" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="Account.SLA__c" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="Account.UpsellOpportunity__c" />
@@ -413,11 +409,11 @@
                         <list>
                           <MetadataEntry>
                             <option name="name" value="CustomLabels" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="CustomLabels" />
-                      <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
                       <option name="name" value="CustomMetadata" />
@@ -743,6 +739,9 @@
                             <option name="name" value="standard-Forecasting3" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="standard-home" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="standard-Idea" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -788,6 +787,9 @@
                             <option name="name" value="standard-Recommendation" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="standard-report" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="standard-Sites" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -813,12 +815,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="standard-Workspace" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="standard-home" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="standard-report" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="th_con_app__Welcome" />
@@ -878,18 +874,6 @@
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewCommentNotificationSAMPLE" />
-                            <option name="parentFolder" value="unfiled$public" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewUserLoginInformationSAMPLE" />
-                            <option name="parentFolder" value="unfiled$public" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="unfiled$public/SUPPORTSelfServiceResetPasswordSAMPLE" />
-                            <option name="parentFolder" value="unfiled$public" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="unfiled$public/SalesNewCustomerEmail" />
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
@@ -918,11 +902,23 @@
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewCommentNotificationSAMPLE" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="unfiled$public/SupportSelfServiceNewLoginandPassword" />
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="unfiled$public/SUPPORTSelfServiceNewUserLoginInformationSAMPLE" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="unfiled$public/SupportSelfServiceResetPassword" />
+                            <option name="parentFolder" value="unfiled$public" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="unfiled$public/SUPPORTSelfServiceResetPasswordSAMPLE" />
                             <option name="parentFolder" value="unfiled$public" />
                           </MetadataEntry>
                         </list>
@@ -1851,10 +1847,10 @@
                             <option name="name" value="CFO" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="COO" />
+                            <option name="name" value="ChannelSalesTeam" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="ChannelSalesTeam" />
+                            <option name="name" value="COO" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="CustomerSupportInternational" />

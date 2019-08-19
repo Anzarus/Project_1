@@ -5,7 +5,7 @@
 ({
     init: function (cmp, event, helper) {
         helper.setColumns(cmp);
-        helper.getProdOfCurrOpp(cmp, event, helper);
+        helper.getProdOfCurrOpp(cmp);
     },
 
     handleRowAction: function (cmp, event, helper) {

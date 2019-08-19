@@ -5,8 +5,8 @@
 ({
     setColumns: function (cmp) {
         const actions = [
-            {label: 'Edit', name: 'edit'},
-            {label: 'Delete', name: 'delete'}
+            {label: $A.get("$Label.c.Edit"), name: 'edit'},
+            {label: $A.get("$Label.c.Delete"), name: 'delete'}
         ];
         cmp.set('v.columns', [
             {label: 'Product Name', fieldName: 'Name', type: 'text'},
@@ -24,7 +24,12 @@
             const state = response.getState();
             if (state === "SUCCESS") {
                 const data = response.getReturnValue();
+                if (data.length === 0) {
+                    this.showToast('Info','There is no products in opportunity','info');
+                }
                 cmp.set("v.data", data);
+            } else {
+                this.showToast('Error!', 'Unexpected error!', 'error');
             }
         });
         $A.enqueueAction(action);
@@ -44,6 +49,8 @@
                 data.splice(rowIndex, 1);
                 cmp.set('v.data', data);
                 $A.get('e.force:refreshView').fire();
+            } else {
+                this.showToast('Error!', 'Unexpected error!', 'error');
             }
         });
         $A.enqueueAction(action);
@@ -82,5 +89,15 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    showToast: function (title, message, variant) {
+        const toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            title: title,
+            message: message,
+            type: variant
+        });
+        toastEvent.fire();
     }
 });
