@@ -9,8 +9,8 @@
             {label: $A.get("$Label.c.Delete"), name: 'delete'}
         ];
         cmp.set('v.columns', [
-            {label: 'Product Name', fieldName: 'Name', type: 'text'},
-            {label: 'Price', fieldName: 'Price__c', type: 'currency'},
+            {label: $A.get("$Label.c.ProdName"), fieldName: 'Name', type: 'text'},
+            {label: '$A.get("$Label.c.Price")', fieldName: 'Price__c', type: 'currency'},
             {type: 'action', typeAttributes: {rowActions: actions}}
         ]);
     },
@@ -49,6 +49,7 @@
                 data.splice(rowIndex, 1);
                 cmp.set('v.data', data);
                 $A.get('e.force:refreshView').fire();
+                this.showToast('Success!', 'The product ' + data[rowIndex].Name + ' deleted from this opportunity!', 'success');
             } else {
                 this.showToast('Error!', 'Unexpected error!', 'error');
             }
@@ -60,8 +61,8 @@
 
         $A.createComponent(
             "c:EditPageForProd", {
-                "prodId": prodId,
-                "rowIndex": rowIndex
+                "prodId": prodId/*,
+                "rowIndex": rowIndex*/
             },
             function (myModal) {
                 if (cmp.isValid()) {
@@ -74,7 +75,7 @@
         );
     },
 
-    getOneUpdatedProd: function (cmp, event) {
+    /*getOneUpdatedProd: function (cmp, event) {
         const rowIndex = event.getParam("rowIndex");
         const data = cmp.get("v.data");
 
@@ -89,7 +90,7 @@
             }
         });
         $A.enqueueAction(action);
-    },
+    },*/
 
     showToast: function (title, message, variant) {
         const toastEvent = $A.get("e.force:showToast");

@@ -9,9 +9,8 @@
     <!--    attributes-->
     <aura:attribute name="prodId" type="String"/>
     <aura:attribute name="prod" type="Product2"/>
-    <aura:attribute name="newName" type="String"/>
-    <aura:attribute name="newPrice" type="Decimal"/>
     <aura:attribute name="rowIndex" type="Integer"/>
+    <aura:attribute name="fields" type="String[]" default="['Name', 'Price__c', 'Description']"/>
 
     <!--    handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
@@ -27,23 +26,17 @@
                 <header class="slds-modal__header">
                     <lightning:buttonIcon iconName="utility:close" variant="border-filled" onclick="{!c.cancel}"
                                           alternativeText="Close" class="slds-modal__close"/>
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Box Example </h2>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.prod.Name}</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <h6>
-                        <lightning:input label="ProdName" name="Product Name"
-                                         messageWhenValueMissing="Please print value" value="{!v.newName}"/>
-                        <aura:text value="Old value = "/> {!v.prod.Name}
-                        <lightning:input label="Price" name="Price Of Product" type="number"
-                                         messageWhenValueMissing="Please print value" value="{!v.newPrice}"
-                                         formatter="currency" step="0.01"/>
-                        <aura:text value="Old value = "/> {!v.prod.Price__c}
-                    </h6>
+                    <lightning:recordForm objectApiName="Product2"
+                                          mode="edit"
+                                          recordId="{!v.prodId}"
+                                          columns="2"
+                                          fields="{!v.fields}"
+                                          onsubmit="{!c.handleSubmit}"
+                    />
                 </div>
-                <footer class="slds-modal__footer">
-                    <lightning:button label="Cancel" variant="neutral" onclick="{!c.cancel}"/>
-                    <lightning:button label="Save" variant="brand" onclick="{!c.saveNewVariantOfProd}"/>
-                </footer>
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>

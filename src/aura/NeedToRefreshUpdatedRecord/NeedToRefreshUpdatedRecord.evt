@@ -3,5 +3,4 @@
  -->
 
 <aura:event type="COMPONENT" description="NeedToRefreshUpdatedRecord">
-    <aura:attribute name="rowIndex" type="String"/>
 </aura:event>

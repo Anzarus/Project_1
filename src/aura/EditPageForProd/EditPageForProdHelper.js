@@ -14,31 +14,9 @@
                 const prod = response.getReturnValue();
                 if (prod != null) {
                     cmp.set("v.prod", prod);
-                    cmp.set("v.newName", prod.Name);
-                    cmp.set("v.newPrice", prod.Price__c);
                 } else {
-                    cmp.print("No elements");
+                    this.showToast('Error!', 'Unexpected error!', 'error');
                 }
-            }
-        });
-        $A.enqueueAction(action);
-    },
-
-    updateCurrentProd:function(cmp, helper, newName, newPrice, prodId){
-        const action = cmp.get("c.setNewParamOfProduct2");
-        action.setParams({name: newName, price: newPrice, prodId: prodId});
-        action.setCallback(this, function (response) {
-            const state = response.getState();
-            if (state === "SUCCESS") {
-                const compEvent = cmp.getEvent("needToRefreshRecord");
-                compEvent.fire();
-
-                helper.showToast('Success!','The record was updated!','success');
-
-                cmp.destroy();
-                $A.get('e.force:refreshView').fire();
-            } else {
-                helper.showToast('Error!','Unexpected error!','error');
             }
         });
         $A.enqueueAction(action);

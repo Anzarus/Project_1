@@ -26,6 +26,6 @@
     },
 
     handleCompEvent: function (cmp, event, helper) {
-        helper.getOneUpdatedProd(cmp, event);
+        $A.get('e.force:refreshView').fire();
     }
 });
