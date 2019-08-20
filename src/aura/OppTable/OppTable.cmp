@@ -3,7 +3,7 @@
  -->
 
 <aura:component description="OppTable"
-                implements="force:hasRecordId, flexipage:availableForAllPageTypes"
+                implements="force:hasRecordId,flexipage:availableForAllPageTypes"
                 controller="OppTableController">
     <!-- attributes -->
     <aura:attribute name="data" type="Object" default="There is no products in this opportunity"/>

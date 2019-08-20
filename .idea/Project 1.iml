@@ -33,7 +33,7 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="OpportunityTotalPriceRecalcilator" />
+                            <option name="name" value="OpportunityTotalPriceRecalculator" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -41,7 +41,7 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
-                            <option name="name" value="ProductTriggerHandler" />
+                            <option name="name" value="Product2TriggerHandler" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -128,10 +128,6 @@
                         <list>
                           <MetadataEntry>
                             <option name="name" value="EditPageForProd" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="NeedToRefreshUpdatedRecord" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
@@ -237,6 +233,9 @@
                     <MetadataType>
                       <option name="entries">
                         <list>
+                          <MetadataEntry>
+                            <option name="name" value="Project_1" />
+                          </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="standard__AppLauncher" />
                           </MetadataEntry>
@@ -401,6 +400,22 @@
                       <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
+                      <option name="entries">
+                        <list>
+                          <MetadataEntry>
+                            <option name="name" value="Delete" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Edit" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Price" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="ProdName" />
+                          </MetadataEntry>
+                        </list>
+                      </option>
                       <option name="name" value="CustomLabel" />
                       <option name="wildcard" value="false" />
                     </MetadataType>
@@ -977,14 +992,23 @@
                         <list>
                           <MetadataEntry>
                             <option name="name" value="LightningSalesConsole_UtilityBar" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="LightningService_UtilityBar" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Opportunity_Record_Page" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="Project_1_UtilityBar" />
+                            <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
                       </option>
                       <option name="name" value="FlexiPage" />
-                      <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
                       <option name="name" value="Flow" />
@@ -1524,8 +1548,15 @@
                       <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
+                      <option name="entries">
+                        <list>
+                          <MetadataEntry>
+                            <option name="name" value="Project_1_user_permission_set" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                        </list>
+                      </option>
                       <option name="name" value="PermissionSet" />
-                      <option name="wildcard" value="false" />
                     </MetadataType>
                     <MetadataType>
                       <option name="name" value="PlatformCachePartition" />
