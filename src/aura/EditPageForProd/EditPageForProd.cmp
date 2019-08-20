@@ -12,12 +12,6 @@
     <aura:attribute name="rowIndex" type="Integer"/>
     <aura:attribute name="fields" type="String[]" default="['Name', 'Price__c', 'Description']"/>
 
-    <!--    handlers-->
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-
-    <!--    events-->
-    <aura:registerEvent name="needToRefreshRecord" type="c:NeedToRefreshUpdatedRecord"/>
-
     <!--Body-->
     <div style="height: 640px;">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
@@ -26,7 +20,7 @@
                 <header class="slds-modal__header">
                     <lightning:buttonIcon iconName="utility:close" variant="border-filled" onclick="{!c.cancel}"
                                           alternativeText="Close" class="slds-modal__close"/>
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.prod.Name}</h2>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update product</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <lightning:recordForm objectApiName="Product2"
@@ -34,7 +28,8 @@
                                           recordId="{!v.prodId}"
                                           columns="2"
                                           fields="{!v.fields}"
-                                          onsubmit="{!c.handleSubmit}"
+                                          onsuccess="{!c.handleSuccess}"
+                                          onerror="{!c.handleError}"
                     />
                 </div>
             </div>

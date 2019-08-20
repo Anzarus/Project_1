@@ -3,17 +3,16 @@
  */
 
 ({
-    doInit: function (cmp, event, helper) {
-        helper.getProduct2(cmp);
-    },
-
-    cancel: function (cmp, event, helper) {
-        const compEvent = cmp.getEvent("needToRefreshRecord");
+    cancel: function (cmp) {
         cmp.destroy();
-        compEvent.fire();
     },
 
-    handleSubmit: function (cmp, event, helper) {
+    handleSuccess: function (cmp, event, helper) {
         helper.showToast("Success!", "Product was updated!", "success");
+        $A.get('e.force:refreshView').fire();
+    },
+
+    handleError: function (cmp, event, helper) {
+        helper.showToast("Error!", "Unexpected error!", "error");
     }
 });

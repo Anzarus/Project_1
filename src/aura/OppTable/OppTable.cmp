@@ -10,8 +10,8 @@
     <aura:attribute name="columns" type="List"/>
 
     <!-- handlers-->
-    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <aura:handler name="needToRefreshRecord" event="c:NeedToRefreshUpdatedRecord" action="{!c.handleCompEvent}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
 
     <!-- the container element determine the height of the datatable -->
     <div style="height: max-content">

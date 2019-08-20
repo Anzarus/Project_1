@@ -3,7 +3,7 @@
  */
 
 ({
-    init: function (cmp, event, helper) {
+    doInit: function (cmp, event, helper) {
         helper.setColumns(cmp);
         helper.getProdOfCurrOpp(cmp);
     },
@@ -23,9 +23,5 @@
                 helper.viewChangeWindow(cmp, prodId, rowIndex);
                 break;
         }
-    },
-
-    handleCompEvent: function (cmp, event, helper) {
-        $A.get('e.force:refreshView').fire();
     }
 });

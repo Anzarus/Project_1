@@ -10,7 +10,7 @@
         ];
         cmp.set('v.columns', [
             {label: $A.get("$Label.c.ProdName"), fieldName: 'Name', type: 'text'},
-            {label: '$A.get("$Label.c.Price")', fieldName: 'Price__c', type: 'currency'},
+            {label: $A.get("$Label.c.Price"), fieldName: 'Price__c', type: 'currency'},
             {type: 'action', typeAttributes: {rowActions: actions}}
         ]);
     },
@@ -57,12 +57,10 @@
         $A.enqueueAction(action);
     },
 
-    viewChangeWindow: function (cmp, prodId, rowIndex) {
-
+    viewChangeWindow: function (cmp, prodId) {
         $A.createComponent(
             "c:EditPageForProd", {
-                "prodId": prodId/*,
-                "rowIndex": rowIndex*/
+                "prodId": prodId
             },
             function (myModal) {
                 if (cmp.isValid()) {
@@ -74,23 +72,6 @@
             }
         );
     },
-
-    /*getOneUpdatedProd: function (cmp, event) {
-        const rowIndex = event.getParam("rowIndex");
-        const data = cmp.get("v.data");
-
-        const action = cmp.get("c.getUpdatedProduct2s");
-        action.setParams({prodId: data[rowIndex].Id});
-
-        action.setCallback(this, function (response) {
-            const state = response.getState();
-            if (state === "SUCCESS") {
-                data[rowIndex] = response.getReturnValue();
-                cmp.set("v.data", data);
-            }
-        });
-        $A.enqueueAction(action);
-    },*/
 
     showToast: function (title, message, variant) {
         const toastEvent = $A.get("e.force:showToast");
