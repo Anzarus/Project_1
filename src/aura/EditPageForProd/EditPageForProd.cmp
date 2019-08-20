@@ -30,7 +30,6 @@
                                           columns="2"
                                           fields="{!v.fields}"
                                           onsuccess="{!c.handleSuccess}"
-                                          onerror="{!c.handleError}"
                     />
                 </div>
             </div>
