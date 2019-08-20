@@ -8,11 +8,13 @@
     },
 
     handleSuccess: function (cmp, event, helper) {
-        helper.showToast("Success!", "Product was updated!", "success");
+        helper.showToast($A.get("$Label.c.success"), $A.get("$Label.c.ProdUpdated"), "success");
         $A.get('e.force:refreshView').fire();
     },
 
     handleError: function (cmp, event, helper) {
-        helper.showToast("Error!", "Unexpected error!", "error");
+        let errorMessage = event.getParam("message");
+        if (errorMessage === '') errorMessage = $A.get("$Label.c.GenErr");
+        helper.showToast($A.get("$Label.c.err"), errorMessage, 'error');
     }
 });

@@ -15,6 +15,20 @@
         <value>Edit</value>
     </labels>
     <labels>
+        <fullName>GenErr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>General error</shortDescription>
+        <value>General error</value>
+    </labels>
+    <labels>
+        <fullName>NoProdInOpp</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>no prod in opp</shortDescription>
+        <value>There is no products in opportunity!</value>
+    </labels>
+    <labels>
         <fullName>Price</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -27,5 +41,61 @@
         <protected>true</protected>
         <shortDescription>prodName</shortDescription>
         <value>Product Name</value>
+    </labels>
+    <labels>
+        <fullName>ProdUpdated</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product was updated</shortDescription>
+        <value>Product was updated!</value>
+    </labels>
+    <labels>
+        <fullName>SuccDelProd1</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>prod del from opp</shortDescription>
+        <value>The product</value>
+    </labels>
+    <labels>
+        <fullName>SuccDelProd2</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>prod del from opp</shortDescription>
+        <value>deleted from this opportunity!</value>
+    </labels>
+    <labels>
+        <fullName>UnexpErr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Unexpected error</shortDescription>
+        <value>Unexpected error!</value>
+    </labels>
+    <labels>
+        <fullName>err</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>err</shortDescription>
+        <value>Error!</value>
+    </labels>
+    <labels>
+        <fullName>inf</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>inf</shortDescription>
+        <value>Info:</value>
+    </labels>
+    <labels>
+        <fullName>off</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>offline</shortDescription>
+        <value>No response from server or client is offline.</value>
+    </labels>
+    <labels>
+        <fullName>success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>success</shortDescription>
+        <value>Success!</value>
     </labels>
 </CustomLabels>

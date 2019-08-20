@@ -11,16 +11,17 @@
     <aura:attribute name="prod" type="Product2"/>
     <aura:attribute name="rowIndex" type="Integer"/>
     <aura:attribute name="fields" type="String[]" default="['Name', 'Price__c', 'Description']"/>
+    <aura:attribute name="header" type="String" default="Update product"/>
 
     <!--Body-->
-    <div style="height: 640px;">
+    <div>
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <lightning:buttonIcon iconName="utility:close" variant="border-filled" onclick="{!c.cancel}"
                                           alternativeText="Close" class="slds-modal__close"/>
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update product</h2>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.header}</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                     <lightning:recordForm objectApiName="Product2"

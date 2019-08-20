@@ -8,13 +8,14 @@
     <!-- attributes -->
     <aura:attribute name="data" type="Object" default="There is no products in this opportunity"/>
     <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="cmpBody" type="Aura.Component[]"/>
 
     <!-- handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler event="force:refreshView" action="{!c.doInit}" />
 
     <!-- the container element determine the height of the datatable -->
-    <div style="height: max-content">
+    <div class="custom_class-max_width">
         <lightning:datatable
                 columns="{!v.columns}"
                 data="{!v.data}"
@@ -24,7 +25,7 @@
                 showRowNumberColumn="true"
         />
     </div>
-    <div aura:id="ModalDiv">
-        {!v.body}
+    <div>
+        <span class="cmpBody">{!v.cmpBody}</span>
     </div>
 </aura:component>
