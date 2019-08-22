@@ -28,4 +28,6 @@
     <div>
         <span class="cmpBody">{!v.cmpBody}</span>
     </div>
+
+    <c:newComponent aura:id="child"/>
 </aura:component>

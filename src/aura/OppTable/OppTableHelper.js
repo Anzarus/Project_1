@@ -36,21 +36,38 @@
     deleteProdFromOpp: function (cmp, row) {
         const data = cmp.get("v.data");
         const rowIndex = data.indexOf(row);
-        const oppId = cmp.get("v.recordId");
+        // const oppId = cmp.get("v.recordId");
         const prodId = data[rowIndex].Id;
+        const oppId = cmp.get("v.recordId");
 
-        const action = cmp.get("c.deleteProdFromOpp");
-        action.setParams({oppId: oppId, prodId: prodId});
-        action.setCallback(this, function (response) {
-            const state = response.getState();
-            if (state === "SUCCESS") {
-                data.splice(rowIndex, 1);
-                cmp.set('v.data', data);
+        const childCmp = cmp.find("child");
+
+        console.log("attributes: " + {oppId, prodId});
+
+        // call the aura:method in the child component
+        const auraMethodResult = childCmp.firstMethod(
+            cmp,
+            "deleteProdFromOpp",
+            {oppId, prodId},
+            function (result) {
                 $A.get('e.force:refreshView').fire();
-                this.showToast($A.get("$Label.c.success"), $A.get("$Label.c.SuccDelProd1") + data[rowIndex].Name + $A.get("$Label.c.SuccDelProd2"), 'success');
-            } else this.checkOtherCases(state, response);
-        });
-        $A.enqueueAction(action);
+            },
+            function () {
+                this.showToast($A.get("$Label.c.err"), "", 'error')
+            }
+        );
+
+
+        // const action = cmp.get("c.deleteProdFromOpp");
+        // action.setParams({oppId: oppId, prodId: prodId});
+        // action.setCallback(this, function (response) {
+        //     const state = response.getState();
+        //     if (state === "SUCCESS") {
+        //         $A.get('e.force:refreshView').fire();
+        //         this.showToast($A.get("$Label.c.success"), $A.get("$Label.c.SuccDelProd1") + data[rowIndex].Name + $A.get("$Label.c.SuccDelProd2"), 'success');
+        //     } else this.checkOtherCases(state, response);
+        // });
+        // $A.enqueueAction(action);
     },
 
     viewChangeWindow: function (cmp, prodId) {

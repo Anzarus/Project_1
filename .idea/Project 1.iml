@@ -127,11 +127,23 @@
                       <option name="entries">
                         <list>
                           <MetadataEntry>
+                            <option name="name" value="ConnectorToServer" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="EditPageForProd" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="newComponent" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="OppTable" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="testApp" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
