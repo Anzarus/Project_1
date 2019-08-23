@@ -20,20 +20,21 @@
         const apexMethodName = parameters.apexMethodName;
         const attributes = parameters.attributes;
 
-        const promise = new Promise(function (resolve, reject) {
-            const returnValue = helper.doRequest(parentCmp, apexMethodName, attributes, helper,function (helper, response) {
-                    if (response.getReturnValue().length === 0) {
-                        helper.showToast($A.get("$Label.c.inf"), $A.get("$Label.c.NoProdInOpp"), 'info');
-                    }
-                }, function (state, response, helper) {
-                    helper.checkOtherCases(state, response, helper);
-                }
-            );
-            resolve(returnValue);
-            reject();
-        });
 
-        promise.then((data) => {
+
+        const promise = helper.setControllerAndParams(parentCmp, apexMethodName, attributes, helper,function (helper, response) {
+                if (response.getReturnValue().length === 0) {
+                    helper.showToast($A.get("$Label.c.inf"), $A.get("$Label.c.NoProdInOpp"), 'info');
+                }
+            }, function (state, response, helper) {
+                helper.checkOtherCases(state, response, helper);
+            }
+        );
+        // const promise = new Promise(function (resolve, reject) {
+        // });
+
+        promise.then((successCallback, data) => {//todo
+            if (successCallback) successCallback(helper, response);
             cmp.set("v.data", data);
         });
 

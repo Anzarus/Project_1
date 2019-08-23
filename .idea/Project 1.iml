@@ -131,6 +131,10 @@
                       <option name="entries">
                         <list>
                           <MetadataEntry>
+                            <option name="name" value="BaseComponent" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="ConnectorToServer" />
                             <option name="selected" value="true" />
                           </MetadataEntry>

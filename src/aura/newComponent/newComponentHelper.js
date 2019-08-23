@@ -24,18 +24,25 @@
         }
     },
 
-    doRequest: function (parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback) {
+    setControllerAndParams: function (parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback) {
         const action = parentCmp.get("c." + apexMethodName);
         action.setParams({json: JSON.stringify(attributes).toString()});
-        action.setCallback(this, function (response) {
-            const state = response.getState();
-            if (state === "SUCCESS") {
-                if (successCallback) successCallback(helper, response);
-            } else {
-                if (errorCallback) errorCallback(state, response, helper);
-            }
-            return response.getReturnValue();
+
+        return this.doRequest(action, helper, successCallback, errorCallback);
+    },
+
+    doRequest: function (action, helper, successCallback, errorCallback) {
+        return new Promise(function (resolve, reject) {
+            action.setCallback(this, function (response) {
+                const state = response.getState();
+                if (state === "SUCCESS") {
+                    resolve();
+                } else {
+                    if (errorCallback) errorCallback(state, response, helper);//todo
+                }
+                return response.getReturnValue();
+            });
+            $A.enqueueAction(action);
         });
-        $A.enqueueAction(action);
     }
 });
