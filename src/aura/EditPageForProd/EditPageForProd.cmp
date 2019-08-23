@@ -3,8 +3,7 @@
  -->
 
 <aura:component description="EditPageForProd"
-                implements="flexipage:availableForAllPageTypes"
-                controller="EditPageForProdController">
+                implements="flexipage:availableForAllPageTypes">
 
     <!--    attributes-->
     <aura:attribute name="prodId" type="String"/>

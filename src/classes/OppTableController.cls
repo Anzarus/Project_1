@@ -4,17 +4,22 @@
 
 public with sharing class OppTableController {
     @AuraEnabled
-    public static List<Product2> getProduct2sOfOpp(String oppId) {
-        return new Product2sOfCurrentOppGetter().getProduct2sOfOpp(oppId);
+    public static List<Product2> getProduct2sOfOpp(String json) {
+        return new Product2sOfCurrentOppGetter().getProduct2sOfOpp(json);
     }
 
     class Product2sOfCurrentOppGetter {
 
-        private List<Product2> getProduct2sOfOpp(String oppId) {
+        private List<Product2> getProduct2sOfOpp(String json) {
+
+            Map<String, String> parameters = StringJsonToParamsMapConverter.convertJsonToParamsMap(json);
+
+            Id oppId = parameters.get('oppId');
+
             List<OpportunityLineItem> oppLineItems = [
                     SELECT Id, OpportunityId, Product2Id
                     FROM OpportunityLineItem
-                    WHERE OpportunityId = :Id.valueOf(oppId)
+                    WHERE OpportunityId = :oppId
             ];
             Map<Id, OpportunityLineItem> oppLineItemsByProdIds = new Map<Id, OpportunityLineItem>();
             for (OpportunityLineItem oppLineItem : oppLineItems) {
@@ -27,48 +32,39 @@ public with sharing class OppTableController {
                     SELECT Id, Name, Price__c
                     FROM Product2
                     WHERE Id IN :oppLineItemsByProdIds.keySet()
-//                    ORDER BY Name
             ];
         }
     }
 
     @AuraEnabled
-    public static void deleteProdFromOpp(String oppId, String prodId) {
+    public static void deleteProdFromOpp(String json) {
 
-        Product2 prod = [SELECT Id, Price__c FROM Product2
-        WHERE Id = : Id.valueOf(prodId)];
+        Map<String, String> parameters = StringJsonToParamsMapConverter.convertJsonToParamsMap(json);
+
+        Id prodId = parameters.get('prodId');
+        Id oppId = parameters.get('oppId');
+
+        Product2 prod = [
+                SELECT Id, Price__c
+                FROM Product2
+                WHERE Id = :prodId
+        ];
 
         OpportunityLineItem oppLineItem = [
                 SELECT Id, Quantity
                 FROM OpportunityLineItem
-                WHERE Product2Id = :prod.Id AND OpportunityId = :Id.valueOf(oppId)
+                WHERE Product2Id = :prod.Id AND OpportunityId = :oppId
                 LIMIT 1
         ];
         Opportunity opp = [
                 SELECT Id, Total_Price__c
                 FROM Opportunity
-                WHERE Id = :Id.valueOf(oppId)
+                WHERE Id = :oppId
                 LIMIT 1
         ];
         opp.Total_Price__c -= prod.Price__c * oppLineItem.Quantity;
 
         update opp;
         delete oppLineItem;
-    }
-
-    @AuraEnabled
-    public static Product2 getUpdatedProduct2s(String prodId) {
-        return new UpdatedProduct2Getter().getProduct2(prodId);
-    }
-
-    class UpdatedProduct2Getter {
-
-        private Product2 getProduct2(String prodId) {
-            return [
-                    SELECT Id, Name, Price__c
-                    FROM Product2
-                    WHERE Id = :Id.valueOf(prodId)
-            ];
-        }
     }
 }

@@ -4,15 +4,16 @@
 
 <aura:component description="newComponent">
     <aura:method name="firstMethod" >
-        <aura:attribute name="parentCmp" type="Aura.Component" default="1"/>
-        <aura:attribute name="apexMethodName" type="String" default="1"/>
-        <aura:attribute name="params" type="Object" default="1"/>
-        <aura:attribute name="successCallback" type="Function" default="1"/>
-        <aura:attribute name="errorCallback" type="Function" default="1"/>
+        <aura:attribute name="parentCmp" type="Aura.Component"/>
+        <aura:attribute name="apexMethodName" type="String"/>
+        <aura:attribute name="attributes" type="Object"/>
+        <aura:attribute name="successCallback" type="Function"/>
+        <aura:attribute name="errorCallback" type="Function"/>
     </aura:method>
 
-    <aura:method name="SecondMethod" action="{!c.secondMethod}">
+    <aura:method name="secondMethod" action="{!c.secondMethod}">
+        <aura:attribute name="parentCmp" type="Aura.Component"/>
         <aura:attribute name="apexMethodName" type="String"/>
-        <aura:attribute name="attribute" type="Object"/>
+        <aura:attribute name="attributes" type="Object"/>
     </aura:method>
 </aura:component>

@@ -29,10 +29,6 @@
                       <option name="entries">
                         <list>
                           <MetadataEntry>
-                            <option name="name" value="EditPageForProdController" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
                             <option name="name" value="OpportunityTotalPriceRecalculator" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
@@ -45,11 +41,19 @@
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
+                            <option name="name" value="StringJsonToObjectMapConverter" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
                             <option name="name" value="TestProduct2TriggerHandler" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="TestProductAndOppCreator" />
+                            <option name="selected" value="true" />
+                          </MetadataEntry>
+                          <MetadataEntry>
+                            <option name="name" value="TestStringJsonToParamsMapConverter" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>
@@ -140,10 +144,6 @@
                           </MetadataEntry>
                           <MetadataEntry>
                             <option name="name" value="OppTable" />
-                            <option name="selected" value="true" />
-                          </MetadataEntry>
-                          <MetadataEntry>
-                            <option name="name" value="testApp" />
                             <option name="selected" value="true" />
                           </MetadataEntry>
                         </list>

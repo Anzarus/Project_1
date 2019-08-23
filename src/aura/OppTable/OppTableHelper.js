@@ -17,57 +17,40 @@
 
     getProdOfCurrOpp: function (cmp) {
         const oppId = cmp.get("v.recordId");
-        const action = cmp.get("c.getProduct2sOfOpp");
-        action.setParams({oppId: oppId});
+        const childCmp =cmp.find("child");
 
-        action.setCallback(this, function (response) {
-            const state = response.getState();
-            if (state === "SUCCESS") {
-                const data = response.getReturnValue();
-                if (data.length === 0) {
-                    this.showToast($A.get("$Label.c.inf"), $A.get("$Label.c.NoProdInOpp"), 'info');
-                }
-                cmp.set("v.data", data);
-            } else this.checkOtherCases(state, response);
-        });
-        $A.enqueueAction(action);
-    },
+        const auraMethodResult = childCmp.secondMethod(
+            cmp,
+            "getProduct2sOfOpp",
+            {oppId}
+        );
+    },//todo
 
     deleteProdFromOpp: function (cmp, row) {
         const data = cmp.get("v.data");
         const rowIndex = data.indexOf(row);
-        // const oppId = cmp.get("v.recordId");
-        const prodId = data[rowIndex].Id;
         const oppId = cmp.get("v.recordId");
-
+        const prodId = data[rowIndex].Id;
         const childCmp = cmp.find("child");
 
-        console.log("attributes: " + {oppId, prodId});
-
-        // call the aura:method in the child component
         const auraMethodResult = childCmp.firstMethod(
             cmp,
             "deleteProdFromOpp",
             {oppId, prodId},
-            function (result) {
+            function (helper) {
+                helper.showToast(
+                    $A.get("$Label.c.success"),
+                    $A.get("$Label.c.SuccDelProd1") + " "
+                    + data[rowIndex].Name + " "
+                    + $A.get("$Label.c.SuccDelProd2"),
+                    'success'
+                );
                 $A.get('e.force:refreshView').fire();
             },
-            function () {
-                this.showToast($A.get("$Label.c.err"), "", 'error')
+            function (state, response, helper) {
+                helper.checkOtherCases(state, response, helper);
             }
         );
-
-
-        // const action = cmp.get("c.deleteProdFromOpp");
-        // action.setParams({oppId: oppId, prodId: prodId});
-        // action.setCallback(this, function (response) {
-        //     const state = response.getState();
-        //     if (state === "SUCCESS") {
-        //         $A.get('e.force:refreshView').fire();
-        //         this.showToast($A.get("$Label.c.success"), $A.get("$Label.c.SuccDelProd1") + data[rowIndex].Name + $A.get("$Label.c.SuccDelProd2"), 'success');
-        //     } else this.checkOtherCases(state, response);
-        // });
-        // $A.enqueueAction(action);
     },
 
     viewChangeWindow: function (cmp, prodId) {
@@ -90,25 +73,5 @@
                 }
             }
         );
-    },
-
-    showToast: function (title, message, variant) {
-        const toastEvent = $A.get("e.force:showToast");
-        toastEvent.setParams({
-            title: title,
-            message: message,
-            type: variant
-        });
-        toastEvent.fire();
-    },
-
-    checkOtherCases: function (state, response) {
-        if (state === "ERROR") {
-            let errorMessage = response.getError();
-            if (errorMessage === '') errorMessage = $A.get("$Label.c.GenErr");
-            this.showToast($A.get("$Label.c.err"), errorMessage, 'error');
-        } else {
-            this.showToast($A.get("$Label.c.err"), $A.get("$Label.c.GenErr"), 'error');
-        }
-    }
+    }//todo
 });

@@ -4,33 +4,52 @@
 
 ({
     firstMethod: function (cmp, event, helper) {
-        const parametrs = event.getParam('arguments');
-        const apexMethodName = parametrs.apexMethodName;
-        const params = parametrs.params;
-        const successCallback = parametrs.successCallback;
-        const errorCallback = parametrs.errorCallback;
-        const parentCmp = parametrs.parentCmp;
+        const parameters = event.getParam('arguments');
+        const parentCmp = parameters.parentCmp;
+        const apexMethodName = parameters.apexMethodName;
+        const attributes = parameters.attributes;
+        const successCallback = parameters.successCallback;
+        const errorCallback = parameters.errorCallback;
 
-        console.log(params);
-
-        const action = parentCmp.get("c." + apexMethodName);//todo який саме cmp треба викликати
-        action.setParams({paramToStr: params.toString()});
-        action.setCallback(this, function (response) {
-            const state = response.getState();
-            if (state === "SUCCESS") {
-                if (successCallback) successCallback(response.getReturnValue());
-            } else if (state === "ERROR") {
-                if (errorCallback) errorCallback(response.getReturnValue());
-            } else {
-                helper.showToast($A.get("$Label.c.err"), $A.get("$Label.c.GenErr"), 'error');
-            }
-        });
-        $A.enqueueAction(action);
+        helper.doRequest(parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback);
     },
 
     secondMethod: function (cmp, event, helper) {
-        const apexMethodName = event.getParam("apexMethodName");
-        const attributes = event.getParam("attributes");
+        const parameters = event.getParam('arguments');
+        const parentCmp = parameters.parentCmp;
+        const apexMethodName = parameters.apexMethodName;
+        const attributes = parameters.attributes;
 
+        const promise = new Promise(function (resolve, reject) {
+            const returnValue = helper.doRequest(parentCmp, apexMethodName, attributes, helper,function (helper, response) {
+                    if (response.getReturnValue().length === 0) {
+                        helper.showToast($A.get("$Label.c.inf"), $A.get("$Label.c.NoProdInOpp"), 'info');
+                    }
+                }, function (state, response, helper) {
+                    helper.checkOtherCases(state, response, helper);
+                }
+            );
+            resolve(returnValue);
+            reject();
+        });
+
+        promise.then((data) => {
+            cmp.set("v.data", data);
+        });
+
+        return promise;
+        /*      const action = cmp.get("c." + apexMethodName);
+                action.setParams({json : JSON.stringify(attributes)});
+                action.setCallback(this, function (response) {
+                    const state = response.getState();
+                    if (state === "SUCCESS") {
+                        const data = response.getReturnValue();
+                        if (data.length === 0) {
+                            this.showToast($A.get("$Label.c.inf"), $A.get("$Label.c.NoProdInOpp"), 'info');
+                        }
+                        cmp.set("v.data", data);
+                    } else this.checkOtherCases(state, response);
+                });
+                $A.enqueueAction(action);*/
     }
 });
