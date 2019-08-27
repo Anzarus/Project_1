@@ -19,7 +19,7 @@
         const oppId = cmp.get("v.recordId");
         const childCmp = cmp.find("child");
 
-        /*const auraMethodResult = */childCmp.secondMethod(
+        /*const auraMethodResult = */childCmp.getMethod(
             cmp,
             "getProduct2sOfOpp",
             {oppId}
@@ -33,7 +33,7 @@
         const prodId = data[rowIndex].Id;
         const childCmp = cmp.find("child");
 
-        /*const auraMethodResult = */childCmp.firstMethod(
+        /*const auraMethodResult = */childCmp.setMethod(
             cmp,
             "deleteProdFromOpp",
             {oppId, prodId},

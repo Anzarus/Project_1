@@ -3,7 +3,7 @@
  -->
 
 <aura:component description="newComponent">
-    <aura:method name="firstMethod" >
+    <aura:method name="setMethod" >
         <aura:attribute name="parentCmp" type="Aura.Component"/>
         <aura:attribute name="apexMethodName" type="String"/>
         <aura:attribute name="attributes" type="Object"/>
@@ -11,7 +11,7 @@
         <aura:attribute name="errorCallback" type="Function"/>
     </aura:method>
 
-    <aura:method name="secondMethod" action="{!c.secondMethod}">
+    <aura:method name="getMethod">
         <aura:attribute name="parentCmp" type="Aura.Component"/>
         <aura:attribute name="apexMethodName" type="String"/>
         <aura:attribute name="attributes" type="Object"/>

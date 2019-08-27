@@ -3,7 +3,7 @@
  */
 
 ({
-    firstMethod: function (cmp, event, helper) {
+    setMethod: function (cmp, event, helper) {
         const parameters = event.getParam('arguments');
         const parentCmp = parameters.parentCmp;
         const apexMethodName = parameters.apexMethodName;
@@ -14,7 +14,7 @@
         helper.doRequest(parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback);
     },
 
-    secondMethod: function (cmp, event, helper) {
+    getMethod: function (cmp, event, helper) {
         const parameters = event.getParam('arguments');
         const parentCmp = parameters.parentCmp;
         const apexMethodName = parameters.apexMethodName;

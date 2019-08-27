@@ -29,5 +29,5 @@
         <span class="cmpBody">{!v.cmpBody}</span>
     </div>
 
-    <c:newComponent aura:id="child"/>
+    <c:ServiceComponent aura:id="child"/>
 </aura:component>
