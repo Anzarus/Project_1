@@ -17,14 +17,14 @@
 
     getProdOfCurrOpp: function (cmp) {
         const oppId = cmp.get("v.recordId");
-        const childCmp =cmp.find("child");
+        const childCmp = cmp.find("child");
 
-        const auraMethodResult = childCmp.secondMethod(
+        /*const auraMethodResult = */childCmp.secondMethod(
             cmp,
             "getProduct2sOfOpp",
             {oppId}
         );
-    },//todo
+    },
 
     deleteProdFromOpp: function (cmp, row) {
         const data = cmp.get("v.data");
@@ -33,7 +33,7 @@
         const prodId = data[rowIndex].Id;
         const childCmp = cmp.find("child");
 
-        const auraMethodResult = childCmp.firstMethod(
+        /*const auraMethodResult = */childCmp.firstMethod(
             cmp,
             "deleteProdFromOpp",
             {oppId, prodId},
@@ -73,5 +73,5 @@
                 }
             }
         );
-    }//todo
+    }
 });

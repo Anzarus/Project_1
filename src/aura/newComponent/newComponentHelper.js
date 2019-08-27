@@ -24,23 +24,34 @@
         }
     },
 
-    setControllerAndParams: function (parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback) {
+    doRequest: function (parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback) {
+        const action = parentCmp.get("c." + apexMethodName);
+        action.setParams({json: JSON.stringify(attributes).toString()});
+        action.setCallback(this, function (response) {
+            const state = response.getState();
+            if (state === "SUCCESS") {
+                if (successCallback) successCallback(helper, response);
+            } else {
+                if (errorCallback) errorCallback(state, response, helper);
+            }
+            return response.getReturnValue();
+        });
+        $A.enqueueAction(action);
+    },
+
+    doPromiseRequest: function (parentCmp, apexMethodName, attributes) {
         const action = parentCmp.get("c." + apexMethodName);
         action.setParams({json: JSON.stringify(attributes).toString()});
 
-        return this.doRequest(action, helper, successCallback, errorCallback);
-    },
-
-    doRequest: function (action, helper, successCallback, errorCallback) {
         return new Promise(function (resolve, reject) {
             action.setCallback(this, function (response) {
                 const state = response.getState();
                 if (state === "SUCCESS") {
-                    resolve();
+                    console.log(response);
+                    resolve(response.getReturnValue());
                 } else {
-                    if (errorCallback) errorCallback(state, response, helper);//todo
+                    reject(response);
                 }
-                return response.getReturnValue();
             });
             $A.enqueueAction(action);
         });
