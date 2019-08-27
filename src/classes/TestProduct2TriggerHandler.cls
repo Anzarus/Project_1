@@ -174,7 +174,8 @@ private class TestProduct2TriggerHandler {
                 TimeZoneSidKey = 'America/Los_Angeles');
 
         PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Label = 'Project 1 user permission set'];
-        new PermissionSetAssignment(PermissionSetId = permissionSet.Id, AssigneeId = testUser.Id);
+        PermissionSetAssignment psa = new PermissionSetAssignment
+                (PermissionSetId = permissionSet.Id, AssigneeId = testUser.Id);
 
         return testUser;
     }

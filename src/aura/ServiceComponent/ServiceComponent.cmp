@@ -3,7 +3,7 @@
  -->
 
 <aura:component description="newComponent">
-    <aura:method name="setMethod" >
+    <aura:method name="setMethod">
         <aura:attribute name="parentCmp" type="Aura.Component"/>
         <aura:attribute name="apexMethodName" type="String"/>
         <aura:attribute name="attributes" type="Object"/>
