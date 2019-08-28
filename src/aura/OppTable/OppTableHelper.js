@@ -23,7 +23,7 @@
 
         const auraMethodResult = requestCmp.requestPromise(
             "getProduct2sOfOpp",
-            {oppId}
+            {oppId: oppId}
         );
 
         auraMethodResult.then(
@@ -54,7 +54,7 @@
 
         requestCmp.requestCallback(
             "deleteProdFromOpp",
-            {oppId, prodId},
+            {oppId: oppId, prodId: prodId},
             function () {
                 toastCmp.showToast($A.get("$Label.c.success"),
                     $A.get("$Label.c.SuccDelProd1") + " "

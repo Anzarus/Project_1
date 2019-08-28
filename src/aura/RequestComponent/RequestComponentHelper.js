@@ -5,7 +5,7 @@
 ({
     doRequest: function (parentCmp, apexMethodName, attributes, helper, successCallback, errorCallback) {
         const action = parentCmp.get("c." + apexMethodName);
-        action.setParams({json: JSON.stringify(attributes).toString()});
+        action.setParams(attributes);
         action.setCallback(this, function (response) {
             const state = response.getState();
             if (state === "SUCCESS") {
@@ -19,7 +19,7 @@
 
     doPromiseRequest: function (parentCmp, apexMethodName, attributes) {
         const action = parentCmp.get("c." + apexMethodName);
-        action.setParams({json: JSON.stringify(attributes).toString()});
+        action.setParams(attributes);
 
         return new Promise(function (resolve, reject) {
             action.setCallback(this, function (response) {

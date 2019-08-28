@@ -3,7 +3,7 @@
  -->
 
 <aura:component description="RequestComponent">
-    <aura:attribute name="parentCmp" type="Aura.Component"/>
+    <aura:attribute name="parentCmp" type="Aura.Component" required="true"/>
 
     <aura:method name="requestCallback">
         <aura:attribute name="apexMethodName" type="String"/>

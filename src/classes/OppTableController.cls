@@ -4,17 +4,13 @@
 
 public with sharing class OppTableController {
     @AuraEnabled
-    public static List<Product2> getProduct2sOfOpp(String json) {
-        return new Product2sOfCurrentOppGetter().getProduct2sOfOpp(json);
+    public static List<Product2> getProduct2sOfOpp(String oppId) {
+        return new Product2sOfCurrentOppGetter().getProduct2sOfOpp(oppId);
     }
 
     class Product2sOfCurrentOppGetter {
 
-        private List<Product2> getProduct2sOfOpp(String json) {
-
-            Map<String, String> parameters = StringJsonToParamsMapConverter.convertJsonToParamsMap(json);
-
-            Id oppId = parameters.get('oppId');
+        private List<Product2> getProduct2sOfOpp(String oppId) {
 
             List<OpportunityLineItem> oppLineItems = [
                     SELECT Id, OpportunityId, Product2Id
@@ -37,34 +33,36 @@ public with sharing class OppTableController {
     }
 
     @AuraEnabled
-    public static void deleteProdFromOpp(String json) {
+    public static void deleteProdFromOpp(String oppId, String prodId){
+        new Product2FromCurrentOppDeleter().deleteProdFromOpp(oppId, prodId);
+    }
 
-        Map<String, String> parameters = StringJsonToParamsMapConverter.convertJsonToParamsMap(json);
+    class Product2FromCurrentOppDeleter {
 
-        Id prodId = parameters.get('prodId');
-        Id oppId = parameters.get('oppId');
+        private void deleteProdFromOpp(String oppId, String prodId) {
 
-        Product2 prod = [
-                SELECT Id, Price__c
-                FROM Product2
-                WHERE Id = :prodId
-        ];
+            Product2 prod = [
+                    SELECT Id, Price__c
+                    FROM Product2
+                    WHERE Id = :prodId
+            ];
 
-        OpportunityLineItem oppLineItem = [
-                SELECT Id, Quantity
-                FROM OpportunityLineItem
-                WHERE Product2Id = :prod.Id AND OpportunityId = :oppId
-                LIMIT 1
-        ];
-        Opportunity opp = [
-                SELECT Id, Total_Price__c
-                FROM Opportunity
-                WHERE Id = :oppId
-                LIMIT 1
-        ];
-        opp.Total_Price__c -= prod.Price__c * oppLineItem.Quantity;
+            OpportunityLineItem oppLineItem = [
+                    SELECT Id, Quantity
+                    FROM OpportunityLineItem
+                    WHERE Product2Id = :prod.Id AND OpportunityId = :oppId
+                    LIMIT 1
+            ];
+            Opportunity opp = [
+                    SELECT Id, Total_Price__c
+                    FROM Opportunity
+                    WHERE Id = :oppId
+                    LIMIT 1
+            ];
+            opp.Total_Price__c -= prod.Price__c * oppLineItem.Quantity;
 
-        update opp;
-        delete oppLineItem;
+            update opp;
+            delete oppLineItem;
+        }
     }
 }
