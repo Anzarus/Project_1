@@ -29,5 +29,6 @@
         <span class="cmpBody">{!v.cmpBody}</span>
     </div>
 
-    <c:ServiceComponent aura:id="child"/>
+    <c:RequestComponent aura:id="requestCmp" parentCmp="{!this}"/>
+    <c:ShowToastComponent aura:id="toastCmp"/>
 </aura:component>

@@ -7,8 +7,10 @@
         cmp.destroy();
     },
 
-    handleSuccess: function (cmp, event, helper) {
-        helper.showToast($A.get("$Label.c.success"), $A.get("$Label.c.ProdUpdated"), "success");
+    handleSuccess: function (cmp) {
+        const toastCmp = cmp.find("toastCmp");
+
+        toastCmp.showToast($A.get("$Label.c.success"), $A.get("$Label.c.ProdUpdated"), "success");
         $A.get('e.force:refreshView').fire();
     }
 });

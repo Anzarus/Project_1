@@ -17,13 +17,30 @@
 
     getProdOfCurrOpp: function (cmp) {
         const oppId = cmp.get("v.recordId");
-        const childCmp = cmp.find("child");
 
-        /*const auraMethodResult = */childCmp.getMethod(
-            cmp,
+        const requestCmp = cmp.find("requestCmp");
+        const toastCmp = cmp.find("toastCmp");
+
+        const auraMethodResult = requestCmp.requestPromise(
             "getProduct2sOfOpp",
             {oppId}
         );
+
+        auraMethodResult.then(
+            function (result) {
+                if (result.length === 0)
+                    toastCmp.showToast($A.get("$Label.c.inf"), $A.get("$Label.c.NoProdInOpp"), 'info');
+                else
+                    cmp.set("v.data", result);
+            })
+            .catch(
+                function (errors) {
+                    let errorMessage = errors[0].message;
+                    if (errorMessage === '') errorMessage = $A.get("$Label.c.GenErr");
+                    toastCmp.showToast($A.get("$Label.c.err"), errorMessage, 'error');
+                });
+
+
     },
 
     deleteProdFromOpp: function (cmp, row) {
@@ -31,29 +48,32 @@
         const rowIndex = data.indexOf(row);
         const oppId = cmp.get("v.recordId");
         const prodId = data[rowIndex].Id;
-        const childCmp = cmp.find("child");
 
-        /*const auraMethodResult = */childCmp.setMethod(
-            cmp,
+        const requestCmp = cmp.find("requestCmp");
+        const toastCmp = cmp.find("toastCmp");
+
+        requestCmp.requestCallback(
             "deleteProdFromOpp",
             {oppId, prodId},
-            function (helper) {
-                helper.showToast(
-                    $A.get("$Label.c.success"),
+            function () {
+                toastCmp.showToast($A.get("$Label.c.success"),
                     $A.get("$Label.c.SuccDelProd1") + " "
                     + data[rowIndex].Name + " "
                     + $A.get("$Label.c.SuccDelProd2"),
-                    'success'
-                );
+                    'success');
                 $A.get('e.force:refreshView').fire();
             },
-            function (state, response, helper) {
-                helper.checkOtherCases(state, response, helper);
+            function (errors) {
+                let errorMessage = errors[0].message;
+                if (errorMessage === '') errorMessage = $A.get("$Label.c.GenErr");
+                toastCmp.showToast($A.get("$Label.c.err"), errorMessage, 'error');
             }
         );
     },
 
     viewChangeWindow: function (cmp, prodId) {
+        const toastCmp = cmp.find("toastCmp");
+
         $A.createComponent(
             "c:EditPageForProd", {
                 "prodId": prodId
@@ -65,10 +85,10 @@
                         cmpBody.push(Modal);
                         cmp.set("v.cmpBody", cmpBody);
                     } else if (status === "INCOMPLETE") {
-                        this.showToast($A.get("$Label.c.err"), $A.get("$Label.c.off"), "error");
+                        toastCmp.showToast($A.get("$Label.c.err"), $A.get("$Label.c.off"), "error");
                     } else if (status === "ERROR") {
                         if (errMessage === '') errMessage = $A.get("$Label.c.GenErr");
-                        this.showToast($A.get("$Label.c.err"), errMessage, 'error');
+                        toastCmp.showToast($A.get("$Label.c.err"), errMessage, 'error');
                     }
                 }
             }

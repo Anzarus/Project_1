@@ -36,4 +36,6 @@
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
 
+
+    <c:ShowToastComponent aura:id="toastCmp"/>
 </aura:component>

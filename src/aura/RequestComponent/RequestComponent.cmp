@@ -2,17 +2,17 @@
  - Created by AntonAntoniuk on 22.08.2019.
  -->
 
-<aura:component description="newComponent">
-    <aura:method name="setMethod">
-        <aura:attribute name="parentCmp" type="Aura.Component"/>
+<aura:component description="RequestComponent">
+    <aura:attribute name="parentCmp" type="Aura.Component"/>
+
+    <aura:method name="requestCallback">
         <aura:attribute name="apexMethodName" type="String"/>
         <aura:attribute name="attributes" type="Object"/>
         <aura:attribute name="successCallback" type="Function"/>
         <aura:attribute name="errorCallback" type="Function"/>
     </aura:method>
 
-    <aura:method name="getMethod">
-        <aura:attribute name="parentCmp" type="Aura.Component"/>
+    <aura:method name="requestPromise">
         <aura:attribute name="apexMethodName" type="String"/>
         <aura:attribute name="attributes" type="Object"/>
     </aura:method>
